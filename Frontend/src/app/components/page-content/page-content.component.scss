@@ -1,0 +1,122 @@
+header {
+    background-color: #f8f9fa; // Navbar background
+    padding: 10px 20px;
+    position: relative; // To position the form correctly
+  
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007bff;
+  
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  
+    .navbar-toggler {
+      border: none;
+  
+      &:focus {
+        outline: none;
+      }
+    }
+  
+    .nav-link {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-right: 15px;
+      color: #343a40;
+  
+      &.active {
+        color: #007bff;
+        font-weight: bold;
+      }
+  
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  
+    .navbar-nav {
+      .nav-item {
+        position: relative; // To position dropdown relative to nav-item
+        
+        .dropdown-toggle {
+          font-size: 1rem;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          color: #343a40;
+  
+          &:hover {
+            color: #0056b3;
+          }
+        }
+  
+        // Dropdown menu styles
+        .dropdown-menu {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          min-width: 150px;
+          padding: 10px;
+          background-color: rgba(255, 255, 255, 0.9); // Transparent background
+          border: 1px solid #ddd;
+          border-radius: 0.25rem;
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+          z-index: 1000; // Ensure it appears above other elements
+        }
+  
+        button {
+          display: block;
+          width: 100%;
+          background: none;
+          border: none;
+          padding: 10px;
+          text-align: left;
+          font-size: 1rem;
+          color: #343a40;
+  
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.1); // Slight hover effect
+            color: #0056b3;
+          }
+        }
+      }
+    }
+  
+    // Profile Update Form
+    .profile-update-form {
+      position: absolute; // To overlap the navbar
+      top: 100%; // Position directly below the navbar
+      right: 0; // Align to the right
+      margin-top: 10px; // Space from the navbar
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: rgba(248, 249, 250, 0.95); // Slightly transparent
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); // Shadow for depth
+      z-index: 1000; // Ensure it appears above other elements
+  
+      h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+  
+      .form-label {
+        font-weight: 500;
+      }
+  
+      .form-control {
+        padding: 10px;
+        font-size: 1rem;
+      }
+  
+      .btn {
+        padding: 10px 15px;
+        font-size: 1rem;
+      }
+    }
+  }
+  

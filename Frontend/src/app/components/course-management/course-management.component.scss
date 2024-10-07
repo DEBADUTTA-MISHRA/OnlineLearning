@@ -1,0 +1,65 @@
+body,
+html {
+  overflow-x: hidden;
+}
+
+.course-management {
+  .search-filter {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .search-input {
+      flex: 1;
+      margin-right: 10px;
+    }
+
+    .filter-btn {
+      flex-shrink: 0;
+    }
+  }
+
+  .course-card,
+  .enrolled-card {
+    margin-bottom: 20px;
+
+    /* Ensure uniform width for all cards */
+    width: 100%;
+
+    img {
+      height: 200px;
+      object-fit: cover;
+      width: 100%;
+      /* Ensure the image takes full width */
+    }
+  }
+
+  .progress-bar {
+    background-color: #28a745;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  /* Ensure all cards take full width of the column */
+  box-sizing: border-box;
+}
+
+.course-card,
+.enrolled-card {
+  width: 100%;
+  /* Make sure the card takes full width of the column */
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-text {
+  flex-grow: 1;
+}

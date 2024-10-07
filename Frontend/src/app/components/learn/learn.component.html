@@ -1,0 +1,79 @@
+<div class="course-container" *ngIf="course">
+  <!-- Course Title and Description -->
+  <div class="course-header">
+    <h2>{{ course.title }}</h2>
+    <p>{{ course.description }}</p>
+  </div>
+
+  <!-- Course Tags -->
+  <div class="course-tags">
+    <h4>Tags:</h4>
+    <ul>
+      <li *ngFor="let tag of course.tags">{{ tag }}</li>
+    </ul>
+  </div>
+
+  <!-- Lessons Section -->
+  <div class="lessons-section">
+    <h3>Lessons</h3>
+    <div *ngIf="course.lessons?.length > 0; else noLessons">
+      <div *ngFor="let lesson of course.lessons" class="lesson-card">
+        <h4>{{ lesson.title }}</h4>
+        <p>{{ lesson.content }}</p>
+
+        <!-- Learning Materials for each lesson -->
+        <div *ngIf="lesson.learningMaterials?.length > 0; else noMaterials">
+          <h5>Learning Materials</h5>
+          <div *ngFor="let material of lesson.learningMaterials" class="material-card">
+            <video [src]="material.url" (ended)="markVideoComplete(material._id)" controls class="learning-video" 
+              (error)="handleVideoError(material)">
+              <source [src]="material.url" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="progress-container">
+              <div class="progress-bar" [style.width.%]="videoProgress[material._id] ? 100 : 0">
+                <span *ngIf="videoProgress[material._id]">Completed</span>
+              </div>
+            </div>
+            <h5>{{ material.title }}</h5>
+            <p>{{ material.description }}</p>
+          </div>
+        </div>
+        <ng-template #noMaterials>
+          <p>No learning materials available for this lesson.</p>
+        </ng-template>
+      </div>
+    </div>
+    <ng-template #noLessons>
+      <p>No lessons available.</p>
+    </ng-template>
+  </div>
+
+  <!-- Progress Section -->
+  <div class="progress-section">
+    <h4>Course Progress: {{ progress }}%</h4>
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="progress"></div>
+    </div>
+  </div>
+
+  <!-- Quizzes Section -->
+  <div class="quizzes-section" *ngIf="showQuiz">
+    <h3>{{ quiz.title }}</h3>
+    <div *ngFor="let question of quiz.questions" class="quiz-question">
+      <p>{{ question.question }}</p>
+      <ul>
+        <li *ngFor="let option of question.options">
+          <label>
+            <input type="radio" name="question-{{ question._id }}" (change)="selectAnswer(question._id, option)" [value]="option">
+            {{ option }}
+          </label>
+        </li>
+      </ul>
+    </div>
+    <button (click)="submitQuiz()">Submit Quiz</button>
+  </div>
+
+  <!-- Start Quiz Button -->
+  <button class="start-quiz-btn" *ngIf="quizzes.length > 0 && !showQuiz" (click)="startQuiz()">Start Quiz</button>
+</div>

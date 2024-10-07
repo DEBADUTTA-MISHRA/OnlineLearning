@@ -1,0 +1,14 @@
+.container {
+    min-height: 100vh;
+  }
+  
+  .card {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+  }
+  

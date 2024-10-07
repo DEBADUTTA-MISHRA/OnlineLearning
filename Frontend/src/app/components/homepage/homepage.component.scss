@@ -1,0 +1,65 @@
+// In your component's .scss file (e.g., homepage.component.scss)
+
+.homepage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Full viewport height */
+}
+
+.bg-overlay {
+  height: calc(100vh - 60px);
+  // flex: 1; /* Takes the remaining space between header and footer */
+  background-image: url('../../../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.hero-text {
+  color: white;
+  text-align: center;
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+  }
+}
+
+section {
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px; // Added rounded corners for a softer appearance
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Added subtle shadow for depth
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #333;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+}
+
+footer {
+  background-color: #343a40;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}

@@ -1,0 +1,56 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private apiUrl = 'http://localhost:3000/api/auth';
+  constructor(private http:HttpClient, private router:Router) { }
+
+   // Method to get the token from localStorage
+   getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  // Method to set headers with the token
+  private getAuthHeaders() {
+    const token = this.getToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
+  
+  // Signup method
+  signUp(userData: { name: string; email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, userData);
+  }
+
+  // Login method
+  signIn(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, credentials);
+  }
+  socialLogin(provider: string, accessToken:String) : Observable<any> {
+    const credential = { provider, accessToken };
+    return this.http.post(`${this.apiUrl}/social-login`,credential);
+  }
+
+  getUserProfile(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<any>(`${this.apiUrl}/user/profile`, { headers });
+  }
+
+  updateUserProfile(updateData:any){
+    const headers = this.getAuthHeaders();
+    return this.http.put(`${this.apiUrl}/user/profile/update`,updateData, { headers });
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    this.router.navigate(['/login']);
+  }
+
+}
