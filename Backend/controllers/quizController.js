@@ -1,5 +1,6 @@
 const quizService = require('../services/quizService');
 const responseHelper = require('../helpers/responseHelper');
+const Progress = require('../models/progress');
 
 // const createQuiz = async (req, res) => {
 //   try {
@@ -18,6 +19,7 @@ const addQuizToLesson = async (req, res) => {
   try {
     const { title, questions } = req.body;
     const { courseId, lessonId } = req.params;
+    const userId = req.user.id;
 
     const quizData = {
       title,
@@ -25,6 +27,16 @@ const addQuizToLesson = async (req, res) => {
     };
 
     await quizService.addQuizToLesson(courseId, lessonId, quizData);
+
+
+    // Update the progress for the user directly
+    await Progress.findOneAndUpdate(
+      { user: userId, course: courseId },
+      { $inc: { totalQuizzes: 1 }, lastUpdated: Date.now() },
+      { new: true, upsert: true }
+    );
+
+
     responseHelper.successResponse(res, 'Quiz added successfully');
   } catch (error) {
     console.error(error.message);

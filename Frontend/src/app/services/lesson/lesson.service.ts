@@ -32,7 +32,7 @@ export class LessonService {
     return this.http.get(`${this.apiUrl}/${courseId}`, { headers });
   }
 
-  updateLesson(lessonId: any): Observable<any> {
+  updateLesson(lessonId: any, lessonUpdate:any): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.put(`${this.apiUrl}/${lessonId}`, { headers });
   }

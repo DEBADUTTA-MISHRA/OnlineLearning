@@ -4,6 +4,7 @@ import { LessonService } from '../../services/lesson/lesson.service';
 import { MeterialService } from '../../services/meterial/meterial.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { QuizesService } from '../../services/quizes/quizes.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ export class DashboardComponent implements OnInit {
   isAddLessonVisible = false;
   isUploadMaterialsVisible = false;
   isAddQuizVisible = false;
+  isUpdateLessonVisible=false;
 
   newCourse = {
     title: '',
@@ -54,7 +56,8 @@ export class DashboardComponent implements OnInit {
     private lessonService: LessonService,
     private materialService: MeterialService,
     private authService: AuthService,
-    private quizService: QuizesService
+    private quizService: QuizesService,
+    private toastr:ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -70,6 +73,7 @@ export class DashboardComponent implements OnInit {
         this.userId = res.user._id;
       },
       error: (err) => {
+        this.toastr.error("Error fetching user profile");
         console.error('Error fetching user profile', err);
       }
     });
@@ -83,11 +87,13 @@ export class DashboardComponent implements OnInit {
             course.creator && course.creator._id === this.userId
           );
         } else {
+          this.toastr.warning("Failed to fetch courses");
           console.warn("Failed to fetch courses", response);
         }
       },
       (error) => {
         console.error('Error fetching courses', error);
+        this.toastr.error("Error fetching courses");
       }
     );
   }
@@ -115,16 +121,17 @@ export class DashboardComponent implements OnInit {
   
     this.courseService.createCourse(formData).subscribe(
       (response) => {
-        console.log("API response:", response);
   
         if (response && response.success) {
           this.fetchCourses();
         } else {
+          this.toastr.warning("Unexpected response structure");
           console.warn("Unexpected response structure:", response);
         }
-  
-        this.isCreateCourseVisible = false;
+
         this.resetCourseForm();
+        this.isCreateCourseVisible = false;
+        
       },
       (error) => {
         console.error('Failed to create course', error);
@@ -135,7 +142,6 @@ export class DashboardComponent implements OnInit {
 
 
   deleteCourse(courseId: string) {
-    console.log("courseId_delete", courseId);
     this.courseService.deleteCourse(courseId).subscribe(
       () => {
         this.courses = this.courses.filter(course => course.id !== courseId);
@@ -143,6 +149,7 @@ export class DashboardComponent implements OnInit {
       },
       (error) => {
         console.error('Failed to delete course', error);
+        this.toastr.error("Failed to delete course");
       }
     );
   }
@@ -163,6 +170,7 @@ export class DashboardComponent implements OnInit {
       },
       (error) => {
         console.error('Error updating course', error);
+        this.toastr.error("Error updating course");
       }
     );
   }
@@ -181,7 +189,7 @@ export class DashboardComponent implements OnInit {
 
   createLesson() {
     const lessonData = { ...this.newLesson };
-    console.log("currentCourseId", this.currentCourseId);
+    console.log("lessonData",lessonData); 
     this.lessonService.createLesson(this.currentCourseId, lessonData).subscribe(
       (data) => {
         const courseIndex = this.courses.findIndex(course => course._id === this.currentCourseId);
@@ -190,16 +198,16 @@ export class DashboardComponent implements OnInit {
         }
         this.isAddLessonVisible = false;
         this.resetLessonForm();
+        this.fetchCourses();
       },
       (error) => {
         console.error('Failed to create lesson', error);
+        this.toastr.error("Failed to create lesson");
       }
     );
   }
 
   showUploadMaterialsForm(course: any, lesson: any) {
-    console.log("lessons",lesson);
-    console.log("course", course);
     this.currentCourseId = course;
     this.currentLessonId = lesson; // Set currentLessonId
     this.isUploadMaterialsVisible = true;
@@ -217,7 +225,7 @@ export class DashboardComponent implements OnInit {
 
 uploadMaterials(courseId: string, lessonId: string): void {
   if (!this.selectedFile) {
-    console.error('No file selected');
+    this.toastr.error('No file selected');
     return;
   }
 
@@ -230,7 +238,7 @@ uploadMaterials(courseId: string, lessonId: string): void {
   // Call the materialService to upload the material
   this.materialService.uploadMaterial(courseId, lessonId, formData).subscribe(
     (response) => {
-      console.log('Material uploaded successfully', response);
+      this.toastr.success("Material uploaded successfully");
       this.isUploadMaterialsVisible = false;
       this.resetMaterialForm();
       this.fetchMaterialsByLesson(courseId, lessonId);  // Fetch updated materials
@@ -238,6 +246,7 @@ uploadMaterials(courseId: string, lessonId: string): void {
     },
     (error) => {
       console.error('Failed to upload materials', error);
+      this.toastr.error("Failed to upload materials");
     }
   );
 }
@@ -273,19 +282,19 @@ uploadMaterials(courseId: string, lessonId: string): void {
   showUpdateLessonForm(lesson: any) {
     this.newLesson = { ...lesson }; // Load existing lesson data into form
     this.currentLessonId = lesson._id;
-    this.isAddLessonVisible = true; // Show the add lesson form for updating
+    this.isUpdateLessonVisible = true; // Show the add lesson form for updating
   }
 
   deleteMaterial(courseId: string, lessonId: string, materialId: string) {
     this.materialService.deleteMaterial(courseId,lessonId,materialId).subscribe(
       (response) => {
-        console.log("Material deleted:", response);
+        this.toastr.success("Material deleted successfully");
         // Optionally fetch updated materials for the specific lesson
         this.fetchMaterialsByLesson(courseId,lessonId); 
         this.fetchCourses();
       },
       (error) => {
-        console.error('Failed to delete material', error);
+        this.toastr.error('Failed to delete material', error);
       }
     );
 }
@@ -312,12 +321,13 @@ createQuiz(lessonId: string) {
 
   this.quizService.createQuiz(quizData.courseId, quizData.lessonId, quizData).subscribe(
     () => {
+      this.toastr.success("Quiz created successfully");
       this.isAddQuizVisible = false;
       this.resetQuizForm(); // Reset form after successful submission
       this.fetchMaterialsByLesson(quizData.courseId, lessonId); // Optionally fetch materials for the updated lesson
     },
     (error) => {
-      console.error('Error creating quiz', error);
+      this.toastr.error('Error creating quiz', error);
     }
   );
 }
@@ -349,6 +359,7 @@ addAnotherQuestion() {
         });
       },
       (error) => {
+        this.toastr.error('Error fetching materials');
         console.error('Error fetching materials', error);
       }
     );

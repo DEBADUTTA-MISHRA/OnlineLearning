@@ -16,6 +16,9 @@ export class CourseManagementComponent {
   courseId: any;
   courseDetails: any;
   learnCourses: any;
+  lessonsCompleted: number = 0;
+  quizzesCompleted: number = 0;
+  materialsCompleted: number = 0;
   
   constructor(private courseService: CourseService, private router:Router, private route:ActivatedRoute) {}
 
@@ -42,7 +45,6 @@ export class CourseManagementComponent {
   filterCourses(){
     this.courseService.getCourseByCategory(this.searchKey).subscribe(
       (response) => {
-        console.log('Matched courses:', response);
         this.courses = response.courses;
       },
       (error) => {
@@ -53,7 +55,6 @@ export class CourseManagementComponent {
   enrollCourse(courseId: string): void {
     this.courseService.enrollCourse(courseId).subscribe(
       (response) => {
-        console.log('Enrolled in course:', response);
         this.getEnrolledCourses(); // Refresh the enrolled courses
       },
       (error) => {
@@ -65,7 +66,6 @@ export class CourseManagementComponent {
   unenrollCourse(courseId: string): void {
     this.courseService.unenrollCourse(courseId).subscribe(
       (response) => {
-        console.log('Unenrolled from course:', response);
         this.getEnrolledCourses(); // Refresh the enrolled courses
       },
       (error) => {
@@ -86,7 +86,12 @@ export class CourseManagementComponent {
   }
   
   updateCourseProgress(courseId: string): void {
-    this.courseService.updateCourseProgress(courseId).subscribe(
+    const progressData = {
+      lessonsCompleted: this.lessonsCompleted,
+      quizzesCompleted: this.quizzesCompleted,
+      materialsCompleted: this.materialsCompleted,
+    };
+    this.courseService.updateCourseProgress(courseId, progressData).subscribe(
       (response) => {
         console.log('Course progress updated:', response);
       },

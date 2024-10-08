@@ -1,14 +1,64 @@
-.container {
-    min-height: 100vh;
+.card {
+  background-color: rgba(0, 0, 0, 0.2); /* Transparency effect */
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #ffffff;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.bg-image {
+  min-width: 100%;
+  background: url('../../../assets/images/signUp-bg.jpg') no-repeat center center;
+  background-size: cover;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Page fade-in animation */
+.animate__fadeInUp {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Pulse effect on the button */
+.animate__pulse {
+  animation: pulse 1.5s infinite;
+}
+
+/* Animation for page entrance */
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+      transform: translateY(30px);
   }
-  
-  .card {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+  100% {
+      opacity: 1;
+      transform: translateY(0);
   }
-  
-  .card:hover {
-    transform: translateY(-10px);
+}
+
+/* Pulse button animation */
+@keyframes pulse {
+  0% {
+      transform: scale(1);
   }
-  
+  50% {
+      transform: scale(1.05);
+  }
+  100% {
+      transform: scale(1);
+  }
+}

@@ -1,26 +1,42 @@
 const mongoose = require('mongoose');
 
 const ProgressSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   course: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Course',
     required: true,
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+  totalLessons: {
+    type: Number,
     required: true,
   },
   lessonsCompleted: {
     type: Number,
     default: 0,
   },
-  totalLessons: {
+  totalQuizzes: {
     type: Number,
-    required: true,
+    default: 0,
+  },
+  quizzesCompleted: {
+    type: Number,
+    default: 0,
+  },
+  totalMaterials: {
+    type: Number,
+    default: 0,
+  },
+  materialsCompleted: {
+    type: Number,
+    default: 0,
   },
   percentage: {
-    type: Number,
+    type: Number, // Overall progress in percentage
     default: 0,
   },
   lastUpdated: {
@@ -28,5 +44,6 @@ const ProgressSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
 
 module.exports = mongoose.model('Progress', ProgressSchema);

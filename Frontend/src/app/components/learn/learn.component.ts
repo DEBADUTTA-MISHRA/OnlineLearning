@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../../services/course/course.service';
 import { QuizesService } from '../../services/quizes/quizes.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-learn',
@@ -14,13 +15,17 @@ export class LearnComponent implements OnInit {
   quiz: any = null;
   showQuiz = false;
   selectedAnswers: { [key: string]: string } = {};
-  progress: number = 0;
+  progress: any = 0;
   videoProgress: { [key: string]: boolean } = {};
+  lessonsCompleted: number = 0;
+  quizzesCompleted: number = 0;
+  materialsCompleted: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseService,
-    private quizesService: QuizesService
+    private quizesService: QuizesService,
+    private toastr:ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +37,6 @@ export class LearnComponent implements OnInit {
         // Initialize video progress for lessons and materials
         this.course.lessons.forEach((lesson: any) => {
           lesson.learningMaterials.forEach((material: any) => {
-            console.log('Video URL:', material.url); // Log URL for debugging
             this.videoProgress[material._id] = false;
           });
 
@@ -43,28 +47,40 @@ export class LearnComponent implements OnInit {
 
         this.getCourseProgress(course.data._id);
       } else {
+        this.toastr.error("Course data is missing or incomplete");
         console.error('Course data is missing or incomplete:', course);
       }
     });
   }
 
-  updateProgress() {
-    this.courseService.updateCourseProgress(this.course._id).subscribe(() => {
-      this.getCourseProgress(this.course._id);
-    });
-  }
+ // Call backend API to update progress
+ updateProgress() {
+  const progressData = {
+    lessonsCompleted: this.lessonsCompleted,
+    quizzesCompleted: this.quizzesCompleted,
+    materialsCompleted: this.materialsCompleted,
+  };
 
-  getCourseProgress(courseId: any) {
-    this.courseService.getCourseProgress(courseId).subscribe(progress => {
-      this.progress = progress.percentage;
-    });
-  }
+  this.courseService.updateCourseProgress(this.course._id, progressData).subscribe((response) => {
+    this.getCourseProgress(this.course._id); // Refresh progress after update
+  });
+}
+
+// Get course progress from the backend
+getCourseProgress(courseId: string) {
+  this.courseService.getCourseProgress(courseId).subscribe((response) => {
+    console.log("response",response);
+    this.progress = response;
+  });
+}
+
 
   startQuiz() {
     if (this.quizzes.length > 0) {
       this.showQuiz = true;
       this.quiz = this.quizzes[0];
     } else {
+      this.toastr.warning("No quizzes available.");
       console.warn('No quizzes available.');
     }
   }
@@ -74,6 +90,7 @@ export class LearnComponent implements OnInit {
     this.quizesService.submitQuiz(this.course._id, this.quiz._id, { answers }).subscribe(() => {
       this.updateProgress();
       this.showQuiz = false;
+      this.quizzesCompleted++;
     });
   }
 
@@ -81,12 +98,27 @@ export class LearnComponent implements OnInit {
     this.selectedAnswers[questionId] = answer;
   }
 
-  markVideoComplete(videoId: string) {
-    this.videoProgress[videoId] = true;
-    this.updateProgress();
+  // markVideoComplete(videoId: string) {
+  //   this.videoProgress[videoId] = true;
+  //   this.updateProgress();
+  // }
+
+
+  markVideoComplete(materialId: string) {
+    console.log("materialId",materialId);
+    // Mark video as completed and update progress
+    if (!this.videoProgress[materialId]) {
+      this.videoProgress[materialId] = true;
+      this.materialsCompleted++; // Increment completed materials
+
+      // After video completion, call backend API to update progress
+      this.updateProgress();
+    }
   }
 
+
   handleVideoError(material: any) {
+    this.toastr.error("Video failed to load")
     console.error('Video failed to load:', material);
     // You can display a message or an alternative content here
   }

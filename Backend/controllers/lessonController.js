@@ -1,12 +1,21 @@
 const lessonService = require('../services/lessonService');
 const responseHelper = require('../helpers/responseHelper');
+const Progress = require('../models/progress');
 
 const createLesson = async (req, res) => {
   const { courseId } = req.params;
+  console.log("req.body",req.body);
   const { title, content } = req.body;
-
+  const userId = req.user.id;
   try {
     const newLesson = await lessonService.createLesson(courseId, title, content);
+
+    // Update the progress for the user directly
+    await Progress.findOneAndUpdate(
+      { user: userId, course: courseId },
+      { $inc: { totalLessons: 1 }, lastUpdated: Date.now() },
+      { new: true, upsert: true }
+    );
 
     res.status(201).json({ message: 'Lesson created successfully', lesson: newLesson });
   } catch (error) {

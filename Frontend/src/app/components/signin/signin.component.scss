@@ -1,14 +1,46 @@
 .container {
-    min-height: 100vh;
+  min-width: 100%;
+  min-height: 100vh;
+  background: url('../../../assets/images/signUp-bg.jpg') no-repeat center center/cover; /* Adjust the path to your image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.card {
+  background-color: rgba(0 , 0, 0, 0.2); /* Slightly transparent white */
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #ffffff;
+
+  h3 {
+      color: #007bff; /* Bootstrap primary color */
   }
-  
-  .card {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.btn {
+  background-color: #007bff; /* Bootstrap primary color */
+  border: none; /* Remove border */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+      background-color: #0056b3; /* Darker shade on hover */
+      transform: scale(1.05); /* Scale up effect */
   }
-  
-  .card:hover {
-    transform: translateY(-10px);
-  }
-  
+}
+
+p {
+  color: #6c757d; /* Bootstrap muted color for text */
+}
+
+hr {
+  border-top: 1px solid #007bff; /* Primary color for the line */
+}

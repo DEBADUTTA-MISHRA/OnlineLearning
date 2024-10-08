@@ -1,63 +1,162 @@
+// .dashboard {
+//   padding: 20px;
+//   background-color: #f8f9fa;
+
+//   h1 {
+//     margin-bottom: 20px;
+//   }
+
+//   .form-container {
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     padding: 15px;
+//     margin-bottom: 20px;
+//     background-color: #ffffff;
+//     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+//   }
+
+//   .form-group {
+//     margin-bottom: 15px;
+
+//     label {
+//       display: block;
+//       margin-bottom: 5px;
+//     }
+
+//     input,
+//     textarea {
+//       width: 100%;
+//       padding: 8px;
+//       border: 1px solid #ccc;
+//       border-radius: 4px;
+//       font-size: 14px;
+//     }
+//   }
+
+//   .btn {
+//     margin-right: 10px;
+//   }
+
+//   .course-card,
+//   .lesson-card {
+//     border: 1px solid #ccc;
+//     border-radius: 5px;
+//     padding: 15px;
+//     margin-bottom: 20px;
+//     background-color: #f9f9f9;
+//     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+//     h3,
+//     h5 {
+//       margin: 0 0 10px 0;
+//     }
+
+//     .course-actions,
+//     .lesson-actions {
+//       margin-top: 10px;
+
+//       .btn {
+//         margin-right: 5px;
+//       }
+//     }
+//   }
+// }
+
+
+
 .dashboard {
+  position: relative;
+  background-image: url('../../../assets/images/dash-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
   padding: 20px;
-  background-color: #f8f9fa;
+  color: #fff;
+  overflow: auto;
 
   h1 {
     margin-bottom: 20px;
+    color: #ffffff;
   }
 
-  .form-container {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+  .form-modal {
+    display: flex;
+    justify-content: center;  // Center horizontally
+    align-items: center;  // Center vertically
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000; // Ensure it's on top of other content
+    background-color: rgba(0, 0, 0, 0.5); // Semi-transparent background to focus on modal
 
-  .form-group {
-    margin-bottom: 15px;
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    input,
-    textarea {
+    .form-container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
       width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-  }
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); // Add shadow for a floating effect
+      overflow-y: scroll;
+      height: 100vh;
 
-  .btn {
-    margin-right: 10px;
-  }
+      h2 {
+        color: #343a40; // Darker text color
+        text-align: center;
+        margin-bottom: 20px;
+      }
 
-  .course-card,
-  .lesson-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      .form-group {
+        margin-bottom: 15px;
 
-    h3,
-    h5 {
-      margin: 0 0 10px 0;
-    }
+        label {
+          font-weight: bold;
+          color: #343a40;
+        }
 
-    .course-actions,
-    .lesson-actions {
-      margin-top: 10px;
+        input[type="text"], textarea {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+          transition: border 0.2s;
 
-      .btn {
-        margin-right: 5px;
+          &:focus {
+            border: 1px solid #80bdff;
+            outline: none;
+          }
+        }
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: space-between;
+
+        .btn {
+          width: 48%;
+          padding: 10px;
+          font-size: 16px;
+        }
       }
     }
+  }
+
+  .course-card, .lesson-card, .material-card {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(222, 226, 230, 0.5);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #000000;
+
+    .card-content {
+      pointer-events: auto;
+    }
+  }
+
+  .course-actions, .lesson-actions {
+    margin-top: 10px;
   }
 }

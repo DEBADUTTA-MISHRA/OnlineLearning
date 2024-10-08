@@ -1,72 +1,198 @@
+// header {
+//     background-color: #f8f9fa; // Navbar background
+//     padding: 10px 20px;
+//     position: relative; // To position the form correctly
+
+//     .navbar-brand {
+//       font-size: 1.5rem;
+//       font-weight: bold;
+//       color: #007bff;
+
+//       &:hover {
+//         color: #0056b3;
+//       }
+//     }
+
+//     .navbar-toggler {
+//       border: none;
+
+//       &:focus {
+//         outline: none;
+//       }
+//     }
+
+//     .nav-link {
+//       font-size: 1rem;
+//       font-weight: 500;
+//       margin-right: 15px;
+//       color: #343a40;
+
+//       &.active {
+//         color: #007bff;
+//         font-weight: bold;
+//       }
+
+//       &:hover {
+//         color: #0056b3;
+//       }
+//     }
+
+//     .navbar-nav {
+//       .nav-item {
+//         position: relative; // To position dropdown relative to nav-item
+
+//         .dropdown-toggle {
+//           font-size: 1rem;
+//           cursor: pointer;
+//           display: flex;
+//           align-items: center;
+//           color: #343a40;
+
+//           &:hover {
+//             color: #0056b3;
+//           }
+//         }
+
+//         // Dropdown menu styles
+//         .dropdown-menu {
+//           position: absolute;
+//           top: 100%;
+//           right: 0;
+//           min-width: 150px;
+//           padding: 10px;
+//           background-color: rgba(255, 255, 255, 0.9); // Transparent background
+//           border: 1px solid #ddd;
+//           border-radius: 0.25rem;
+//           box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+//           z-index: 1000; // Ensure it appears above other elements
+//         }
+
+//         button {
+//           display: block;
+//           width: 100%;
+//           background: none;
+//           border: none;
+//           padding: 10px;
+//           text-align: left;
+//           font-size: 1rem;
+//           color: #343a40;
+
+//           &:hover {
+//             background-color: rgba(0, 0, 0, 0.1); // Slight hover effect
+//             color: #0056b3;
+//           }
+//         }
+//       }
+//     }
+
+//     // Profile Update Form
+//     .profile-update-form {
+//       position: absolute; // To overlap the navbar
+//       top: 100%; // Position directly below the navbar
+//       right: 0; // Align to the right
+//       margin-top: 10px; // Space from the navbar
+//       padding: 20px;
+//       border: 1px solid #ddd;
+//       border-radius: 5px;
+//       background-color: rgba(248, 249, 250, 0.95); // Slightly transparent
+//       box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); // Shadow for depth
+//       z-index: 1000; // Ensure it appears above other elements
+
+//       h3 {
+//         font-size: 1.5rem;
+//         font-weight: bold;
+//         margin-bottom: 20px;
+//       }
+
+//       .form-label {
+//         font-weight: 500;
+//       }
+
+//       .form-control {
+//         padding: 10px;
+//         font-size: 1rem;
+//       }
+
+//       .btn {
+//         padding: 10px 15px;
+//         font-size: 1rem;
+//       }
+//     }
+//   }
+
+
+
 header {
-    background-color: #f8f9fa; // Navbar background
-    padding: 10px 20px;
-    position: relative; // To position the form correctly
-  
-    .navbar-brand {
-      font-size: 1.5rem;
+  background-color: #007bff; // Navbar background color
+  padding: 10px 20px;
+  position: relative; // To position the form correctly
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Shadow for depth
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffffff; // White text for brand
+    transition: color 0.3s;
+
+    &:hover {
+      color: #e0e0e0; // Lighter color on hover
+    }
+  }
+
+  .navbar-toggler {
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-right: 15px;
+    color: #ffffff; // White text for nav links
+    transition: color 0.3s;
+
+    &.active {
+      color: #ffcc00; // Active link color
       font-weight: bold;
-      color: #007bff;
-  
-      &:hover {
-        color: #0056b3;
-      }
     }
-  
-    .navbar-toggler {
-      border: none;
-  
-      &:focus {
-        outline: none;
-      }
+
+    &:hover {
+      color: #ffcc00; // Hover effect for links
     }
-  
-    .nav-link {
-      font-size: 1rem;
-      font-weight: 500;
-      margin-right: 15px;
-      color: #343a40;
-  
-      &.active {
-        color: #007bff;
-        font-weight: bold;
-      }
-  
-      &:hover {
-        color: #0056b3;
-      }
-    }
-  
-    .navbar-nav {
-      .nav-item {
-        position: relative; // To position dropdown relative to nav-item
-        
-        .dropdown-toggle {
-          font-size: 1rem;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          color: #343a40;
-  
-          &:hover {
-            color: #0056b3;
-          }
+  }
+
+  .navbar-nav {
+    .nav-item {
+      position: relative; // To position dropdown relative to nav-item
+
+      .dropdown-toggle {
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: #ffffff; // White text for dropdown toggle
+
+        &:hover {
+          color: #ffcc00; // Hover effect for dropdown toggle
         }
-  
-        // Dropdown menu styles
-        .dropdown-menu {
-          position: absolute;
-          top: 100%;
-          right: 0;
-          min-width: 150px;
-          padding: 10px;
-          background-color: rgba(255, 255, 255, 0.9); // Transparent background
-          border: 1px solid #ddd;
-          border-radius: 0.25rem;
-          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-          z-index: 1000; // Ensure it appears above other elements
-        }
-  
+      }
+
+      // Dropdown menu styles
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        min-width: 150px;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.9); // Slightly transparent
+        border: 1px solid #ddd;
+        border-radius: 0.25rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        z-index: 1000; // Ensure it appears above other elements
+
         button {
           display: block;
           width: 100%;
@@ -75,48 +201,85 @@ header {
           padding: 10px;
           text-align: left;
           font-size: 1rem;
-          color: #343a40;
-  
+          color: #343a40; // Dark color for buttons
+
           &:hover {
             background-color: rgba(0, 0, 0, 0.1); // Slight hover effect
-            color: #0056b3;
+            color: #007bff; // Change text color on hover
           }
         }
       }
     }
-  
-    // Profile Update Form
-    .profile-update-form {
-      position: absolute; // To overlap the navbar
-      top: 100%; // Position directly below the navbar
-      right: 0; // Align to the right
-      margin-top: 10px; // Space from the navbar
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background-color: rgba(248, 249, 250, 0.95); // Slightly transparent
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); // Shadow for depth
-      z-index: 1000; // Ensure it appears above other elements
-  
-      h3 {
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 20px;
+  }
+
+  // Profile Update Form
+  .profile-update-form {
+    width: 380px;
+    position: absolute; // To overlap the navbar
+    top: 100%; // Position directly below the navbar
+    right: 0; // Align to the right
+    margin-top: 10px; // Space from the navbar
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.95); // Slightly transparent white
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); // Shadow for depth
+    z-index: 1000; // Ensure it appears above other elements
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #007bff; // Header color
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #343a40; // Dark color for labels
+    }
+
+    .form-control {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ced4da; // Default border
+      border-radius: 0.25rem;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #007bff; // Border color on focus
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); // Focus shadow
       }
-  
-      .form-label {
-        font-weight: 500;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+
+      &.btn-primary {
+        background-color: #007bff; // Primary button color
+        border: none;
+
+        &:hover {
+          background-color: #0056b3; // Darker blue on hover
+        }
       }
-  
-      .form-control {
-        padding: 10px;
-        font-size: 1rem;
-      }
-  
-      .btn {
-        padding: 10px 15px;
-        font-size: 1rem;
+
+      &.btn-secondary {
+        background-color: #6c757d; // Secondary button color
+        border: none;
+
+        &:hover {
+          background-color: #5a6268; // Darker gray on hover
+        }
       }
     }
   }
-  
+}
+
+.course-management {
+  padding: 20px;
+  background-color: #f8f9fa; // Light gray background
+  border-radius: 5px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); // Shadow for depth
+}

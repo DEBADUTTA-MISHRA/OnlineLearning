@@ -1,6 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-page-content',
@@ -20,7 +21,7 @@ export class PageContentComponent {
   };
 
 
-  constructor(private authService: AuthService,private elementRef: ElementRef, private router: Router) {}
+  constructor(private authService: AuthService,private elementRef: ElementRef, private router: Router,private toastr:ToastrService) {}
 
   ngOnInit(): void {
     this.getUserProfile();
@@ -29,10 +30,12 @@ export class PageContentComponent {
   getUserProfile(): void {
     this.authService.getUserProfile().subscribe({
       next: (res) => {
+        this.toastr.success("user Profile fetched successfully!");
         this.userName = res.user.name;
         this.profileData = res.user;
       },
       error: (err) => {
+        this.toastr.error("Error fetching user profile");
         console.error('Error fetching user profile', err);
       }
     });
@@ -49,17 +52,17 @@ export class PageContentComponent {
    showUpdateProfile(): void {
     this.isProfileUpdate = true;
     this.isDropdownOpen = false;
-    console.log("isProfileUpdate", this.isProfileUpdate);
   }
 
   onSubmit(): void {
     this.authService.updateUserProfile(this.profileData).subscribe({
       next: (res) => {
-        console.log('Profile updated successfully', res);
+        this.toastr.success("Profile updated successfully");
         this.isProfileUpdate = false;
         this.getUserProfile();
       },
       error: (err) => {
+        this.toastr.error("Error updating profile");
         console.error('Error updating profile', err);
       }
     });

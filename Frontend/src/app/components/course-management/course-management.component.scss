@@ -1,41 +1,177 @@
+// body,
+// html {
+//   overflow-x: hidden;
+// }
+
+// .course-management {
+//   .search-filter {
+//     display: flex;
+//     justify-content: space-between;
+//     margin-bottom: 20px;
+
+//     .search-input {
+//       flex: 1;
+//       margin-right: 10px;
+//     }
+
+//     .filter-btn {
+//       flex-shrink: 0;
+//     }
+//   }
+
+//   .course-card,
+//   .enrolled-card {
+//     margin-bottom: 20px;
+
+//     /* Ensure uniform width for all cards */
+//     width: 100%;
+
+//     img {
+//       height: 200px;
+//       object-fit: cover;
+//       width: 100%;
+//       /* Ensure the image takes full width */
+//     }
+//   }
+
+//   .progress-bar {
+//     background-color: #28a745;
+//   }
+// }
+
+// .card {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+//   width: 100%;
+//   /* Ensure all cards take full width of the column */
+//   box-sizing: border-box;
+// }
+
+// .course-card,
+// .enrolled-card {
+//   width: 100%;
+//   /* Make sure the card takes full width of the column */
+// }
+
+// .card-body {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+// }
+
+// .card-text {
+//   flex-grow: 1;
+// }
+
 body,
 html {
   overflow-x: hidden;
+  font-family: Montserrat; /* Font choice */
+  background-color: #f1f1f1; /* Soft light background for the whole page */
 }
 
 .course-management {
+  position: relative;
+  padding: 20px;
+  max-width: 1200px; /* Set a max width for the container */
+  margin: auto; /* Center the container */
+  background-color: rgba(255, 255, 255, 0.8); /* Light background for the course section */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.75); /* Soft shadow for depth */
+  border-radius: 8px; /* Rounded corners for smooth look */
+  overflow: hidden;
+  backdrop-filter: blur(8px); /* Blur effect for the background image */
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../../../assets/images/home-bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.6; /* More visibility for the background image */
+    z-index: 1; /* Place background behind other elements */
+  }
+
+  h2 {
+    color: #007bff; /* Header color */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow for better readability */
+  }
+
   .search-filter {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    z-index: 2; /* Place above background image */
 
     .search-input {
       flex: 1;
       margin-right: 10px;
+
+      input {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #007bff;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          border-color: #0056b3; /* Darker border color on focus */
+        }
+      }
     }
 
     .filter-btn {
       flex-shrink: 0;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3; /* Darken on hover */
+      }
     }
   }
 
   .course-card,
   .enrolled-card {
     margin-bottom: 20px;
-
-    /* Ensure uniform width for all cards */
     width: 100%;
+    border-radius: 8px; /* Rounded corners for cards */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+    overflow: hidden; /* Prevent overflow from card elements */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.85); /* Slight transparency for cards */
+    z-index: 2; /* Ensure cards are above the background image */
+
+    &:hover {
+      transform: translateY(-3px); /* Slight lift on hover */
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); /* Increase shadow depth */
+    }
 
     img {
       height: 200px;
       object-fit: cover;
       width: 100%;
-      /* Ensure the image takes full width */
+      border-bottom: 3px solid #007bff; /* Accent border under image */
+      opacity: 1; /* Ensure images are fully opaque */
+      transition: opacity 0.3s ease; /* Smooth opacity transition */
     }
   }
 
   .progress-bar {
     background-color: #28a745;
+    border-radius: 4px; /* Rounded corners for progress bar */
   }
 }
 
@@ -44,22 +180,40 @@ html {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  /* Ensure all cards take full width of the column */
   box-sizing: border-box;
-}
-
-.course-card,
-.enrolled-card {
-  width: 100%;
-  /* Make sure the card takes full width of the column */
+  background-color: #fff; /* Card background */
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative; /* Relative for z-index control */
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 20px;
+  background-color: rgba(241, 241, 241, 0.85); /* Slightly reduced opacity */
+  z-index: 2; /* Place above background image */
 }
 
 .card-text {
   flex-grow: 1;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #007bff; /* Title color */
+}
+
+.card-footer {
+  text-align: right;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-top: 1px solid #ced4da;
 }

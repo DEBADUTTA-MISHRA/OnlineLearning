@@ -50,7 +50,6 @@ export class CourseService {
 
   enrollCourse(courseId:any) : Observable<any>{
     const headers = this.getAuthHeaders();
-    console.log("headers",headers);
     return this.http.post<any>(`${this.apiUrl}/enroll/${courseId}`,{}, { headers });
   }
 
@@ -69,9 +68,9 @@ export class CourseService {
     return this.http.get<any>(`${this.apiUrl}/${courseId}`, { headers });
   }
 
-  updateCourseProgress(courseId:any) : Observable<any> {
+  updateCourseProgress(courseId:any, progressData:any) : Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.post<any>(`${this.apiUrl}/progress/${courseId}`, {}, { headers });
+    return this.http.post<any>(`${this.apiUrl}/progress/${courseId}`, {progressData}, { headers });
   }
 
   getCourseProgress(courseId:any): Observable<any> {

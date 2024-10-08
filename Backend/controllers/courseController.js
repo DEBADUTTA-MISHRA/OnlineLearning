@@ -141,10 +141,10 @@ const updateProgress = async (req, res) => {
   const { courseId } = req.params;
   const userId = req.user.id;
   const progressData = req.body;
-
+  console.log("ProgressData",progressData);
+  
   try {
     const updatedProgress = await courseService.updateProgress(userId, courseId, progressData);
-
     return res.status(200).json({ message: 'Progress updated successfully', progress: updatedProgress });
   } catch (error) {
     console.error(error);
@@ -156,7 +156,7 @@ const updateProgress = async (req, res) => {
 const getProgressForCourse = async (req, res) => {
   const { courseId } = req.params;
   const userId = req.user.id;
-
+  console.log("userId",userId)
   try {
     const progress = await courseService.getProgressForCourse(userId, courseId);
 

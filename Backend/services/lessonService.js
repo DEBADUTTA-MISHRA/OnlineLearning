@@ -15,7 +15,6 @@ const createLesson = async (courseId, title, content) => {
     };
 
     course.lessons.push(newLesson);
-
     await course.save();
 
     return newLesson;
