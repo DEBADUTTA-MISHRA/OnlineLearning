@@ -20,7 +20,11 @@ frontend and backend directories in separate VS Code windows.
 ##5. Run the Frontend
 Execute the following command in the terminal:
 ng serve
-Note: The frontend will run on port 4200 by default. If this port is unavailable, you will be prompted to select another port.
+
+
+Note: The frontend will run on port 4200 by default.
+
+If this port is unavailable, you will be prompted to select another port.
 
 6. Run the Backend
 Execute the following command in the terminal:
