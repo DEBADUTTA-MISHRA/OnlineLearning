@@ -34,7 +34,6 @@ export class LearnComponent implements OnInit {
       if (course && course.data) {
         this.course = course.data;
 
-        // Initialize video progress for lessons and materials
         this.course.lessons.forEach((lesson: any) => {
           lesson.learningMaterials.forEach((material: any) => {
             this.videoProgress[material._id] = false;
@@ -53,7 +52,6 @@ export class LearnComponent implements OnInit {
     });
   }
 
- // Call backend API to update progress
  updateProgress() {
   const progressData = {
     lessonsCompleted: this.lessonsCompleted,
@@ -62,14 +60,12 @@ export class LearnComponent implements OnInit {
   };
 
   this.courseService.updateCourseProgress(this.course._id, progressData).subscribe((response) => {
-    this.getCourseProgress(this.course._id); // Refresh progress after update
+    this.getCourseProgress(this.course._id);
   });
 }
 
-// Get course progress from the backend
 getCourseProgress(courseId: string) {
   this.courseService.getCourseProgress(courseId).subscribe((response) => {
-    console.log("response",response);
     this.progress = response;
   });
 }
@@ -98,20 +94,14 @@ getCourseProgress(courseId: string) {
     this.selectedAnswers[questionId] = answer;
   }
 
-  // markVideoComplete(videoId: string) {
-  //   this.videoProgress[videoId] = true;
-  //   this.updateProgress();
-  // }
+ 
 
 
   markVideoComplete(materialId: string) {
-    console.log("materialId",materialId);
-    // Mark video as completed and update progress
     if (!this.videoProgress[materialId]) {
       this.videoProgress[materialId] = true;
-      this.materialsCompleted++; // Increment completed materials
+      this.materialsCompleted++;
 
-      // After video completion, call backend API to update progress
       this.updateProgress();
     }
   }
@@ -120,6 +110,5 @@ getCourseProgress(courseId: string) {
   handleVideoError(material: any) {
     this.toastr.error("Video failed to load")
     console.error('Video failed to load:', material);
-    // You can display a message or an alternative content here
   }
 }

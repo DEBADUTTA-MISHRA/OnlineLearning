@@ -1,6 +1,5 @@
 const Joi = require('joi');
 
-// Schema for uploading learning material
 const uploadLearningMaterialSchema = Joi.object({
   title: Joi.string().min(3).max(100).required(),
   courseId: Joi.string().alphanum().required(),

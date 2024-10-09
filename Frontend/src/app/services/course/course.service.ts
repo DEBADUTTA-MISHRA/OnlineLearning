@@ -10,12 +10,10 @@ export class CourseService {
 
   constructor(private http: HttpClient) {}
 
-  // Method to get the token from localStorage
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  // Method to set headers with the token
   private getAuthHeaders() {
     const token = this.getToken();
     return new HttpHeaders({

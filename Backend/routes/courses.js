@@ -8,14 +8,13 @@ const path = require('path');
 
 
 
-// Set up multer storage and file handling
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, path.join('uploads', 'image')); // Store files in 'uploads/image'
+      cb(null, path.join('uploads', 'image'));
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, uniqueSuffix + '-' + file.originalname); // Ensure unique filenames
+      cb(null, uniqueSuffix + '-' + file.originalname);
     }
   });
   

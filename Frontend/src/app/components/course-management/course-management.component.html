@@ -52,7 +52,8 @@
               <div class="progress mt-3">
                 <div class="progress-bar bg-success" role="progressbar" [style.width.%]="enrolled.progress"></div>
               </div>
-              <button class="btn btn-success" (click)="startLearning(enrolled.courseId._id)">Start Learning</button>
+              <button class="btn btn-success my-1" (click)="startLearning(enrolled.courseId._id)">Start Learning</button>
+              <button type="button" class="btn btn-info my-1" (click)="unenrollCourse(enrolled.courseId._id)">Unenroll</button>
             </div>
           </div>
         </div>

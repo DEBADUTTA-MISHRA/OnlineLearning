@@ -25,7 +25,6 @@ export class SignUpComponent {
     this.authService.signUp(userData).subscribe(
       (response) => {
         this.toastr.success("User Registered Successfully");
-        console.log('User registered successfully', response);
         this.router.navigate(['/login']);
       },
       (error) => {

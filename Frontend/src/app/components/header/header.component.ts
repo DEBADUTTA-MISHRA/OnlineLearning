@@ -9,9 +9,8 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   constructor(private router: Router) {}
 
-  isNavbarOpen = false; // State to manage navbar visibility
+  isNavbarOpen = false;
 
-// Method to toggle the navbar
 toggleNavbar() {
   this.isNavbarOpen = !this.isNavbarOpen;
 }

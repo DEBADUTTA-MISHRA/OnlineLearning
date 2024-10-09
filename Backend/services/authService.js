@@ -40,37 +40,32 @@ const authenticateUser = async (email, password) => {
 const socialLogin = async (provider, accessToken) => {
   let userProfile;
 
-  // Handle Google login
   if (provider === 'google') {
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
     const ticket = await client.verifyIdToken({
       idToken: accessToken,
-      audience: process.env.GOOGLE_CLIENT_ID, // Ensure this matches your Google client ID
+      audience: process.env.GOOGLE_CLIENT_ID,
     });
-    userProfile = ticket.getPayload(); // Payload contains Google user's info
+    userProfile = ticket.getPayload();
   } 
-  // Handle Facebook login
   else if (provider === 'facebook') {
     const response = await axios.get(`https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email,picture`);
-    userProfile = response.data; // Facebook response contains user's info
+    userProfile = response.data;
   } 
-  // Unsupported provider
   else {
     throw new Error('Unsupported provider');
   }
 
-  // Look for an existing user by social ID and provider
   let user = await User.findOne({ socialId: userProfile.sub || userProfile.id, provider });
   
-  // If no user is found, create a new one
   if (!user) {
     user = new User({
       name: userProfile.name,
       email: userProfile.email,
-      socialId: userProfile.sub || userProfile.id, // Handle both Google and Facebook social IDs
+      socialId: userProfile.sub || userProfile.id,
       provider,
-      role: 'student', // Set default role or change as needed
-      profilePicture: userProfile.picture ? userProfile.picture.data.url : null, // Facebook stores picture differently
+      role: 'student',
+      profilePicture: userProfile.picture ? userProfile.picture.data.url : null,
     });
     await user.save();
   }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CourseService } from '../../services/course/course.service';
-import { response } from 'express';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-course-management',
@@ -20,7 +20,12 @@ export class CourseManagementComponent {
   quizzesCompleted: number = 0;
   materialsCompleted: number = 0;
   
-  constructor(private courseService: CourseService, private router:Router, private route:ActivatedRoute) {}
+  constructor(
+     private courseService: CourseService,
+     private router:Router,
+     private route:ActivatedRoute,
+     private toastr:ToastrService
+    ) {}
 
   ngOnInit(): void {
     this.getCourses();
@@ -55,9 +60,11 @@ export class CourseManagementComponent {
   enrollCourse(courseId: string): void {
     this.courseService.enrollCourse(courseId).subscribe(
       (response) => {
-        this.getEnrolledCourses(); // Refresh the enrolled courses
+        this.toastr.success("Enrolled Successfully!!");
+        this.getEnrolledCourses(); 
       },
       (error) => {
+        this.toastr.error("Server error please try again!");
         console.error('Error enrolling in course:', error);
       }
     );
@@ -66,7 +73,8 @@ export class CourseManagementComponent {
   unenrollCourse(courseId: string): void {
     this.courseService.unenrollCourse(courseId).subscribe(
       (response) => {
-        this.getEnrolledCourses(); // Refresh the enrolled courses
+        this.toastr.info("Unenrolled Successfully");
+        this.getEnrolledCourses();
       },
       (error) => {
         console.error('Error unenrolling from course:', error);
@@ -77,7 +85,7 @@ export class CourseManagementComponent {
   getEnrolledCourses(): void {
     this.courseService.getEnrolledCourses().subscribe(
       (data) => {
-        this.enrolledCourses = data.enrolledCourses; // Assign the correct path
+        this.enrolledCourses = data.enrolledCourses;
       },
       (error) => {
         console.error('Error fetching enrolled courses:', error);
@@ -93,7 +101,7 @@ export class CourseManagementComponent {
     };
     this.courseService.updateCourseProgress(courseId, progressData).subscribe(
       (response) => {
-        console.log('Course progress updated:', response);
+        this.toastr.success("Course updated successfully");
       },
       (error) => {
         console.error('Error updating course progress:', error);
@@ -104,7 +112,7 @@ export class CourseManagementComponent {
   getCourseProgress(courseId: string): void {
     this.courseService.getCourseProgress(courseId).subscribe(
       (response) => {
-        console.log('Course progress:', response);
+        this.toastr.success("course progress fetched successfully");
       },
       (error) => {
         console.error('Error fetching course progress:', error);
@@ -121,7 +129,7 @@ export class CourseManagementComponent {
   getCourseDetails(courseId:any): void {
     this.courseService.getCoursesById(courseId).subscribe(
       (data) => {
-        this.courseDetails = data; // Store the course data
+        this.courseDetails = data;
       },
       (error) => {
         console.error('Error fetching course details:', error);

@@ -1,87 +1,3 @@
-// const mongoose = require('mongoose');
-
-// const CourseSchema = new mongoose.Schema({
-//   title: {
-//     type: String,
-//     required: true,
-//   },
-//   description: {
-//     type: String,
-//     required: true,
-//   },
-//   creator: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'User',
-//     required: true,
-//   },
-//   category: {
-//     type: String,
-//     required: true,
-//   },
-//   tags: [String],
-//   lessons: [
-//     {
-//       title: String,
-//       content: String,
-//       completedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-//     },
-//   ],
-//   quizzes: [
-//     {
-//       title: String,
-//       questions: [
-//         {
-//           question: String,
-//           options: [String],
-//           correctAnswer: String,
-//         },
-//       ],
-//       completedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-//     },
-//   ],
-//   learningMaterials: [
-//     {
-//       type: {
-//         type: String,
-//         enum: ['video', 'document', 'other'],
-//         required: true,
-//       },
-//       url: {
-//         type: String,
-//         required: true,
-//       },
-//       title: {
-//         type: String,
-//         required: true,
-//       },
-//       description: {
-//         type: String,
-//         default: '',
-//       },
-//       duration: {
-//         type: Number,
-//       },
-//     },
-//   ],
-//   duration: {
-//     type: Number,
-//   },
-//   price: {
-//     type: Number,
-//     default: 0,
-//   },
-//   isPublished: {
-//     type: Boolean,
-//     default: false,
-//   },
-//   publishedAt: {
-//     type: Date,
-//   },
-// });
-
-// module.exports = mongoose.model('Course', CourseSchema);
-
-
 const mongoose = require('mongoose');
 
 const CourseSchema = new mongoose.Schema({
@@ -136,7 +52,7 @@ const CourseSchema = new mongoose.Schema({
           },
         },
       ],
-      quizzes: [ // Quizzes inside lessons
+      quizzes: [
         {
           title: {
             type: String,

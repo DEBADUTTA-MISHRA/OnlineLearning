@@ -7,7 +7,6 @@ import { SigninComponent } from './components/signin/signin.component';
 import { PageContentComponent } from './components/page-content/page-content.component';
 import { CourseManagementComponent } from './components/course-management/course-management.component';
 import { LearnComponent } from './components/learn/learn.component';
-import { QuizComponent } from './components/quiz/quiz.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -17,7 +16,6 @@ const routes: Routes = [
   {path:'page', component:PageContentComponent},
   { path: 'courses', component: CourseManagementComponent },
   {path:'learn/:courseId', component:LearnComponent},
-  {path:'quiz', component:QuizComponent}
 ];
 
 @NgModule({

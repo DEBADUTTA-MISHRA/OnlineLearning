@@ -108,12 +108,12 @@ export class DashboardComponent implements OnInit {
   }
   
   createCourse() {
-    const formData = new FormData(); // Use FormData to handle both text and file data
+    const formData = new FormData();
   
     formData.append('title', this.newCourse.title);
     formData.append('description', this.newCourse.description);
     formData.append('category', this.newCourse.category);
-    formData.append('tags', this.newCourse.tags.split(',').map(tag => tag.trim()).join(',')); // Convert tags to a string
+    formData.append('tags', this.newCourse.tags.split(',').map(tag => tag.trim()).join(','));
   
     if (this.selectedImage) {
       formData.append('image', this.selectedImage);
@@ -189,7 +189,6 @@ export class DashboardComponent implements OnInit {
 
   createLesson() {
     const lessonData = { ...this.newLesson };
-    console.log("lessonData",lessonData); 
     this.lessonService.createLesson(this.currentCourseId, lessonData).subscribe(
       (data) => {
         const courseIndex = this.courses.findIndex(course => course._id === this.currentCourseId);
@@ -209,16 +208,15 @@ export class DashboardComponent implements OnInit {
 
   showUploadMaterialsForm(course: any, lesson: any) {
     this.currentCourseId = course;
-    this.currentLessonId = lesson; // Set currentLessonId
+    this.currentLessonId = lesson;
     this.isUploadMaterialsVisible = true;
 }
 
 
- // Capture file input event
  onFileSelected(event: any): void {
   const file: File = event.target.files[0];
   if (file) {
-    this.selectedFile = file;  // Store the selected file
+    this.selectedFile = file;
   }
 }
 
@@ -230,18 +228,17 @@ uploadMaterials(courseId: string, lessonId: string): void {
   }
 
   const formData = new FormData();
-  formData.append('video', this.selectedFile);  // Append the file
+  formData.append('video', this.selectedFile);
   formData.append('title', this.newMaterial.title);
   formData.append('description', this.newMaterial.description);
   formData.append('duration', this.newMaterial.duration.toString());
 
-  // Call the materialService to upload the material
   this.materialService.uploadMaterial(courseId, lessonId, formData).subscribe(
     (response) => {
       this.toastr.success("Material uploaded successfully");
       this.isUploadMaterialsVisible = false;
       this.resetMaterialForm();
-      this.fetchMaterialsByLesson(courseId, lessonId);  // Fetch updated materials
+      this.fetchMaterialsByLesson(courseId, lessonId);
       this.fetchCourses();
     },
     (error) => {
@@ -278,18 +275,16 @@ uploadMaterials(courseId: string, lessonId: string): void {
     };
   }
 
-  // Implement the method to show update lesson form
   showUpdateLessonForm(lesson: any) {
-    this.newLesson = { ...lesson }; // Load existing lesson data into form
+    this.newLesson = { ...lesson };
     this.currentLessonId = lesson._id;
-    this.isUpdateLessonVisible = true; // Show the add lesson form for updating
+    this.isUpdateLessonVisible = true;
   }
 
   deleteMaterial(courseId: string, lessonId: string, materialId: string) {
     this.materialService.deleteMaterial(courseId,lessonId,materialId).subscribe(
       (response) => {
         this.toastr.success("Material deleted successfully");
-        // Optionally fetch updated materials for the specific lesson
         this.fetchMaterialsByLesson(courseId,lessonId); 
         this.fetchCourses();
       },
@@ -302,11 +297,10 @@ uploadMaterials(courseId: string, lessonId: string): void {
 
 showAddQuizForm(course: any, lesson: any) {
   this.currentCourseId = course;
-  this.currentLessonId = lesson; // Set currentLessonId
+  this.currentLessonId = lesson;
   this.isAddQuizVisible = true;
 }
 
-// Method to create a quiz
 createQuiz(lessonId: string) {
   const quizData = {
       courseId: this.currentCourseId,
@@ -314,7 +308,7 @@ createQuiz(lessonId: string) {
       title: this.newQuiz.title,
       questions: this.newQuiz.questions.map(q => ({
           question: q.question,
-          options: q.options.split(',').map(opt => opt.trim()), // Split options by comma
+          options: q.options.split(',').map(opt => opt.trim()),
           correctAnswer: q.correctAnswer
       }))
   };
@@ -323,8 +317,8 @@ createQuiz(lessonId: string) {
     () => {
       this.toastr.success("Quiz created successfully");
       this.isAddQuizVisible = false;
-      this.resetQuizForm(); // Reset form after successful submission
-      this.fetchMaterialsByLesson(quizData.courseId, lessonId); // Optionally fetch materials for the updated lesson
+      this.resetQuizForm();
+      this.fetchMaterialsByLesson(quizData.courseId, lessonId);
     },
     (error) => {
       this.toastr.error('Error creating quiz', error);
@@ -332,17 +326,15 @@ createQuiz(lessonId: string) {
   );
 }
 
-// Method to reset the quiz form
 resetQuizForm() {
   this.newQuiz = {
     title: '',
-    questions: [{ question: '', options: '', correctAnswer: '' }]  // Reset to one empty question
+    questions: [{ question: '', options: '', correctAnswer: '' }]
   };
 }
 
-// Method to add another question to the quiz
 addAnotherQuestion() {
-  this.newQuiz.questions.push({ question: '', options: '', correctAnswer: '' }); // Add an empty question object
+  this.newQuiz.questions.push({ question: '', options: '', correctAnswer: '' });
 }
 
   fetchMaterialsByLesson(courseId:string, lessonId: string) {

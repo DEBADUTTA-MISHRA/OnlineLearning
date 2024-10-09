@@ -29,9 +29,7 @@ const create = (req, res, next) => {
   next();
 };
 
-// Update Course Validator
 const update = (req, res, next) => {
-  // Define Joi schema for updating a course
   const schema = Joi.object({
     title: Joi.string().min(1).optional().messages({
       'string.empty': 'Title cannot be empty',
@@ -41,7 +39,6 @@ const update = (req, res, next) => {
     }),
   });
 
-  // Validate request body
   const { error } = schema.validate(req.body, { abortEarly: false });
   if (error) {
     const errors = error.details.map(detail => ({ message: detail.message, path: detail.path[0] }));
@@ -51,9 +48,7 @@ const update = (req, res, next) => {
   next();
 };
 
-// Validate Course ID in params
 const validateId = (req, res, next) => {
-  // Define Joi schema for validating id parameter
   const schema = Joi.object({
     id: Joi.string().required().messages({
       'any.required': 'Course ID is required',
@@ -61,7 +56,6 @@ const validateId = (req, res, next) => {
     }),
   });
 
-  // Validate request params
   const { error } = schema.validate(req.params, { abortEarly: false });
   if (error) {
     const errors = error.details.map(detail => ({ message: detail.message, path: detail.path[0] }));
@@ -71,7 +65,6 @@ const validateId = (req, res, next) => {
   next();
 };
 
-// Schema for enrolling in a course
 const enrollInCourseSchema = Joi.object({
   courseId: Joi.string().alphanum().required(),
 });

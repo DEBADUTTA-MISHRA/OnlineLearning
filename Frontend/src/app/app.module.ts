@@ -17,7 +17,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { CourseManagementComponent } from './components/course-management/course-management.component';
 import { LearnComponent } from './components/learn/learn.component';
-import { QuizComponent } from './components/quiz/quiz.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { QuizComponent } from './components/quiz/quiz.component';
     SigninComponent,
     CourseManagementComponent,
     LearnComponent,
-    QuizComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
 const register = (req, res, next) => {
-  // Define Joi schema for registration validation
   const schema = Joi.object({
     name: Joi.string().min(1).required().messages({
       'any.required': 'Name is required',
@@ -12,23 +11,22 @@ const register = (req, res, next) => {
       'string.email': 'Please include a valid email',
     }),
     password: Joi.string().min(6).when(Joi.object({ socialId: Joi.exist() }).unknown(), {
-      then: Joi.forbidden(), // If socialId exists, password is not required
-      otherwise: Joi.required(), // Otherwise, password is required
+      then: Joi.forbidden(),
+      otherwise: Joi.required(),
     }).messages({
       'any.required': 'Password must be 6 or more characters',
       'string.min': 'Password must be at least 6 characters',
     }),
-    socialId: Joi.string().allow(null, ''), // Allow socialId to be null or empty
+    socialId: Joi.string().allow(null, ''),
     profilePicture: Joi.string().uri().optional().messages({
       'string.uri': 'Profile picture must be a valid URL',
     }),
-    bio: Joi.string().optional().allow(''), // Allow bio to be empty
+    bio: Joi.string().optional().allow(''),
     role: Joi.string().valid('student', 'instructor', 'admin').default('student').optional().messages({
       'any.only': 'Role must be one of the following: student, instructor, admin',
     }),
   });
 
-  // Validate request body against the schema
   const { error } = schema.validate(req.body, { abortEarly: false });
   if (error) {
     const errors = error.details.map(detail => ({ message: detail.message, path: detail.path[0] }));
@@ -40,7 +38,6 @@ const register = (req, res, next) => {
 
 
 const login = (req, res, next) => {
-  // Define Joi schema for login validation
   const schema = Joi.object({
     email: Joi.string().email().required().messages({
       'any.required': 'Please include a valid email',
@@ -52,7 +49,6 @@ const login = (req, res, next) => {
     }),
   });
 
-  // Validate request body against the schema
   const { error } = schema.validate(req.body, { abortEarly: false });
   if (error) {
     const errors = error.details.map(detail => ({ message: detail.message, path: detail.path[0] }));
@@ -62,7 +58,6 @@ const login = (req, res, next) => {
   next();
 };
 
-// Schema for updating user profile
 const updateUserProfileSchema = Joi.object({
   name: Joi.string().min(3).max(30).required(),
   email: Joi.string().email().required(),

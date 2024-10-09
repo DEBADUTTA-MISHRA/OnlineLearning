@@ -140,8 +140,7 @@ const getUserEnrolledCourses = async (req, res) => {
 const updateProgress = async (req, res) => {
   const { courseId } = req.params;
   const userId = req.user.id;
-  const progressData = req.body;
-  console.log("ProgressData",progressData);
+  const { progressData } = req.body;
   
   try {
     const updatedProgress = await courseService.updateProgress(userId, courseId, progressData);
@@ -153,10 +152,10 @@ const updateProgress = async (req, res) => {
 };
 
 
+
 const getProgressForCourse = async (req, res) => {
   const { courseId } = req.params;
   const userId = req.user.id;
-  console.log("userId",userId)
   try {
     const progress = await courseService.getProgressForCourse(userId, courseId);
 

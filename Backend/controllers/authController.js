@@ -31,7 +31,6 @@ const socialLogin = async (req, res) => {
     
     const user = await userService.socialLogin(provider, accessToken);
 
-    // Generate a token for the authenticated user
     const token = authMiddleware.generateToken(user);
 
     responseHelper.successResponse(res, 'User logged in successfully via social media.', { token, name: user.name });

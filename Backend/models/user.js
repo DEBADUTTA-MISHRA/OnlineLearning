@@ -12,9 +12,6 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    // required: function() {
-    //   return !this.socialId;
-    // },
   },
   socialId: {
     type: String,

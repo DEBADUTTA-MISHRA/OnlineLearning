@@ -51,9 +51,9 @@
 
   <!-- Progress Section -->
   <div class="progress-section">
-    <h4>Course Progress: {{ progress }}%</h4>
+    <h4>Course Progress: {{ progress.percentage }}%</h4>
     <div class="progress-bar">
-      <div class="progress" [style.width.%]="progress"></div>
+      <div class="progress" [style.width.%]="progress.percentage"></div>
     </div>
   </div>
 

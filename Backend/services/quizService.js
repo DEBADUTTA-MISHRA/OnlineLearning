@@ -1,30 +1,6 @@
 const Course = require('../models/course'); 
 const User = require('../models/user');
 
-// const createQuiz = async (quizData) => {
-//   try {
-//     const { courseId, title, questions } = quizData;
-
-//     const course = await Course.findById(courseId);
-
-//     if (!course) {
-//       throw new Error('Course not found');
-//     }
-
-//     course.quizzes.push({
-//       title,
-//       questions,
-//       completedBy: [],
-//     });
-
-//     await course.save();
-
-//     return { message: 'Quiz created successfully' };
-//   } catch (error) {
-//     throw new Error(`Failed to create quiz: ${error.message}`);
-//   }
-// };
-
 
 const addQuizToLesson = async (courseId, lessonId, quizData) => {
   try {
@@ -35,14 +11,14 @@ const addQuizToLesson = async (courseId, lessonId, quizData) => {
       throw new Error('Course not found');
     }
 
-    const lesson = course.lessons.id(lessonId); // Find lesson by ID within the course
+    const lesson = course.lessons.id(lessonId);
     if (!lesson) {
       throw new Error('Lesson not found');
     }
 
     lesson.quizzes.push({ title, questions });
 
-    await course.save(); // Save the updated course with the new quiz inside the lesson
+    await course.save();
 
     return { message: 'Quiz added successfully' };
   } catch (error) {
@@ -54,32 +30,26 @@ const addQuizToLesson = async (courseId, lessonId, quizData) => {
 const submitQuiz = async (courseId, quizId, answers, userId) => {
   try {
 
-    console.log("answers in service:", answers);
-    // Step 1: Find the course by courseId
     const course = await Course.findById(courseId);
 
     if (!course) {
       throw new Error("Course not found");
     }
 
-    // Step 2: Find the quiz inside lessons array
     let quizToUpdate = null;
     for (const lesson of course.lessons) {
-      // Check if the lesson has quizzes and find the correct quiz by quizId
       quizToUpdate = lesson.quizzes.find((quiz) => quiz._id.equals(quizId));
-      if (quizToUpdate) break; // Exit the loop when the quiz is found
+      if (quizToUpdate) break;
     }
 
     if (!quizToUpdate) {
       throw new Error("Quiz not found");
     }
 
-    // Step 3: Update quiz as completed by the user
     if (!quizToUpdate.completedBy.includes(userId)) {
       quizToUpdate.completedBy.push(userId);
     }
 
-    // Step 4: Check user's answers and calculate the score
     let score = 0;
     const userAnswers = [];
 
@@ -98,7 +68,6 @@ const submitQuiz = async (courseId, quizId, answers, userId) => {
       }
     });
 
-    // Step 5: Update the user's quiz score
     const user = await User.findById(userId);
     if (!user) {
       throw new Error('User not found');
@@ -112,7 +81,6 @@ const submitQuiz = async (courseId, quizId, answers, userId) => {
       user.quizScores.push({ courseId: course._id, score });
     }
 
-    // Step 6: Save the course and user updates
     await user.save();
     await course.save();
 

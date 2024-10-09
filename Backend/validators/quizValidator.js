@@ -1,6 +1,5 @@
 const Joi = require('joi');
 
-// Schema for creating a quiz
 const createQuizSchema = Joi.object({
   title: Joi.string().min(3).max(100).required(),
   description: Joi.string().optional(),
