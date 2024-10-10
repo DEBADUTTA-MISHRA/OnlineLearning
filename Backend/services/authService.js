@@ -56,8 +56,7 @@ const socialLogin = async (provider, accessToken) => {
     throw new Error('Unsupported provider');
   }
 
-  let user = await User.findOne({ socialId: userProfile.sub || userProfile.id, provider });
-  
+  let user = await User.findOne({ email: userProfile.email });
   if (!user) {
     user = new User({
       name: userProfile.name,
@@ -65,7 +64,6 @@ const socialLogin = async (provider, accessToken) => {
       socialId: userProfile.sub || userProfile.id,
       provider,
       role: 'student',
-      profilePicture: userProfile.picture ? userProfile.picture.data.url : null,
     });
     await user.save();
   }

@@ -9,7 +9,12 @@ const path = require('path');
 const app = express();
 connectDB();
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  {
+    origin: 'http://localhost:4200',
+    credentials: true,
+  }
+));
 
 app.use('/api', routes);
 

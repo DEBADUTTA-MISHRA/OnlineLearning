@@ -28,9 +28,8 @@ export class AuthService {
   signIn(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }
-  socialLogin(provider: string, accessToken:String) : Observable<any> {
-    const credential = { provider, accessToken };
-    return this.http.post(`${this.apiUrl}/social-login`,credential);
+  socialLogin(accessToken:String) : Observable<any> {
+    return this.http.post(`${this.apiUrl}/social-login`,{ provider: 'google', accessToken: accessToken });
   }
 
   getUserProfile(): Observable<any> {
