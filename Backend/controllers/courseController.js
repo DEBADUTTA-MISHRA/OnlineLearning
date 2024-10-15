@@ -152,7 +152,6 @@ const updateProgress = async (req, res) => {
 };
 
 
-
 const getProgressForCourse = async (req, res) => {
   const { courseId } = req.params;
   const userId = req.user.id;

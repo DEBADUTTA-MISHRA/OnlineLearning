@@ -3,6 +3,8 @@ const commonHelper = require('../helpers/commonHelper');
 const { OAuth2Client } = require('google-auth-library');
 const axios = require('axios');
 const router = require('../routes/meterial');
+const emailHelper = require('../helpers/emailHelper');
+const crypto = require('crypto');
 
 
 const registerUser = async (name, email, password) => {
@@ -90,10 +92,66 @@ const updateUserProfile = async (userId, updateData) => {
   }
 };
 
+const sendMessage = async (name,email,message) =>{
+  if (!name || !email || !message) {
+    return 'All fields are required';
+  }
+
+  try {
+    await emailHelper.sendQueryMessage(name, email, message);
+    return 'Message sent successfully';
+  } catch (error) {
+    return 'Failed to send message';
+  }
+}
+
+const sendOtp = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error('User not found');
+
+  // Generate a 6-digit OTP
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // Save OTP and expiry (e.g., 10 minutes from now)
+  user.resetOtp = otp;
+  user.resetOtpExpires = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
+  await user.save();
+
+  // Send OTP to email
+  await emailHelper.sendOtpEmail(user.email, otp);
+
+  return 'OTP sent successfully';
+};
+
+const verifyOtpAndResetPassword = async (email, otp, newPassword) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error('User not found');
+
+  // Check if OTP matches and is still valid
+  if (user.resetOtp !== otp || user.resetOtpExpires < Date.now()) {
+    throw new Error('Invalid or expired OTP');
+  }
+
+
+  const hashedPassword = await commonHelper.hashPassword(newPassword);
+
+ // Update the password and remove OTP fields
+ user.password = hashedPassword;
+ user.resetOtp = undefined;
+ user.resetOtpExpires = undefined;
+ await user.save();
+
+ return 'Password reset successful';
+};
+
+
 module.exports = {
   registerUser,
   authenticateUser,
   socialLogin,
   getUserProfile,
-  updateUserProfile
+  updateUserProfile,
+  sendMessage,
+  sendOtp,
+  verifyOtpAndResetPassword
  };

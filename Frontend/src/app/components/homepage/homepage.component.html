@@ -1,44 +1,10 @@
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
   integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-
-<app-header></app-header>
-
-<div class="homepage">
-  <div class="bg-overlay">
-    <header class="hero-text">
-      <h1>Welcome to Online Learning</h1>
-      <p>Your journey to knowledge begins here.</p>
-    </header>
-  </div>
-
-  <section id="about" class="container my-5">
-    <h2>About Us</h2>
-    <p>We provide top-quality courses to help you learn and grow, revolutionizing education by offering flexible and
-      accessible opportunities for individuals of all ages.</p>
-    <p>Whether you are a student looking to enhance your skills, a professional seeking career advancement, or simply a
-      lifelong learner, our platform offers a diverse range of courses tailored to meet your needs.</p>
-    <p>Explore a vast library of courses across various subjects, designed by industry experts and educators. Our
-      interactive lessons, quizzes, and assignments ensure that you stay engaged while mastering new concepts.</p>
-    <p>Join a vibrant community of learners and instructors, where you can share ideas, ask questions, and collaborate
-      on projects. With our intuitive learning management system, tracking your progress and achieving your educational
-      goals has never been easier.</p>
-    <p>Embark on your educational journey today and unlock your potential with the power of online learning!</p>
-  </section>
-
-
-  <section id="contact" class="container my-5">
-    <h2>Contact Us</h2>
-    <p>If you have any questions, feel free to contact us...</p>
-  </section>
-</div>
-
-<app-footer></app-footer> -->
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+  rel="stylesheet">
 
 
 <app-header></app-header>
@@ -55,7 +21,10 @@
   <section id="about" class="container my-5">
     <h2>About Us</h2>
     <p>We provide top-quality courses to help you learn and grow...
-      We are committed to providing a world-class learning experience, offering courses that empower individuals to develop new skills and grow both personally and professionally. Our platform is designed to cater to learners at every stage, whether you're just starting out or looking to deepen your expertise. With a focus on accessibility and high-quality content, we strive to make learning engaging, flexible, and impactful for everyone.
+      We are committed to providing a world-class learning experience, offering courses that empower individuals to
+      develop new skills and grow both personally and professionally. Our platform is designed to cater to learners at
+      every stage, whether you're just starting out or looking to deepen your expertise. With a focus on accessibility
+      and high-quality content, we strive to make learning engaging, flexible, and impactful for everyone.
     </p>
   </section>
 
@@ -64,7 +33,8 @@
     <div class="row">
       <div class="col-md-6">
         <h2>Our Mission</h2>
-        <p>Our mission is to empower individuals through accessible, high-quality education. We strive to inspire and foster lifelong learning...</p>
+        <p>Our mission is to empower individuals through accessible, high-quality education. We strive to inspire and
+          foster lifelong learning...</p>
       </div>
       <div class="col-md-6">
         <img src="../../../assets/images/our-mission.jpg" alt="Our Mission" class="img-fluid rounded">
@@ -97,7 +67,8 @@
   <!-- What We Offer Section -->
   <section id="offer" class="container my-5">
     <h2>What We Offer</h2>
-    <p>We offer a diverse range of courses tailored to meet your learning needs. From beginner to advanced, we have something for everyone...</p>
+    <p>We offer a diverse range of courses tailored to meet your learning needs. From beginner to advanced, we have
+      something for everyone...</p>
   </section>
 
   <!-- What Learners Say Section -->
@@ -122,22 +93,38 @@
   <!-- Contact Us Section -->
   <section id="contact" class="container my-5">
     <h2>Contact Us</h2>
-    <form>
+    <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name">
+        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="contactData.name" required
+          #name="ngModel" />
+        <div *ngIf="name.invalid && name.touched" class="text-danger">
+          Name is required
+        </div>
       </div>
+
       <div class="mb-3">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email">
+        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="contactData.email" required email
+          #email="ngModel" />
+        <div *ngIf="email.invalid && email.touched" class="text-danger">
+          Please enter a valid email
+        </div>
       </div>
+
       <div class="mb-3">
         <label for="message" class="form-label">Message</label>
-        <textarea class="form-control" id="message" rows="3"></textarea>
+        <textarea class="form-control" id="message" name="message" [(ngModel)]="contactData.message" rows="3" required
+          #message="ngModel"></textarea>
+        <div *ngIf="message.invalid && message.touched" class="text-danger">
+          Message is required
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary">Send Message</button>
+
+      <button type="submit" class="btn btn-primary" [disabled]="contactForm.invalid">Send Message</button>
     </form>
   </section>
+
 
   <!-- Get In Touch Section -->
   <section id="get-in-touch" class="container mt-5 mb-0">

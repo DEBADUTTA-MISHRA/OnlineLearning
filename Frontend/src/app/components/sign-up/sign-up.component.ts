@@ -14,7 +14,7 @@ export class SignUpComponent {
   name: string = '';
   email: string = '';
   password: string = '';
-  private clientId = '<Your_client_Id>.apps.googleusercontent.com';
+  private clientId = '692415159898-t1na5k530s1ua5maiukj0hhiebb2j0s3.apps.googleusercontent.com';
 
   constructor(
     @Inject(DOCUMENT) private document: Document,

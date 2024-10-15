@@ -73,5 +73,38 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const sendMessage = async (req, res) => {
+  const { name, email, message } = req.body;
+  try {
+  const result = userService.sendMessage({name,email,message});
 
-module.exports = { register, login, socialLogin, getUserProfile, updateUserProfile };
+  res.status(200).json({success:true,message:'Message sent successfully',result});
+  } catch (error) {
+    res.status(500).json({success:false, message:'Failed to send message',result});
+  }
+};
+
+
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const result = await userService.sendOtp(email);
+    res.status(200).json({ message: 'OTP sent to email', result });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+  try {
+    const result = await userService.verifyOtpAndResetPassword(email, otp, newPassword);
+    res.status(200).json({ message: 'Password reset successful', result });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+  
+
+
+module.exports = { register, login, socialLogin, sendMessage, getUserProfile, updateUserProfile,forgotPassword, resetPassword };
